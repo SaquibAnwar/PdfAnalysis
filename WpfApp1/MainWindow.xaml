@@ -1,0 +1,115 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" SizeToContent="Height"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        ResizeMode="CanMinimize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="23"/>
+            <RowDefinition Height="Auto" MinHeight="25"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Margin="0,10" x:Name="CumulativeFileDetailsGroupBox">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="lblInputFilePath" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Input File Path</Label>
+                <TextBox Name="txtBoxInputFilePath" Grid.Row="0" Grid.Column="1" Margin="0,10" ToolTip="Choose The Input File Path"/>
+                <Button x:Name="btnInputFilePath" Grid.Row="0" Grid.Column="2" Padding="5,0" Margin="0,10" ToolTip="Browse File" Click="BrowsePdfFile" HorizontalAlignment="Right" Width="22">...</Button>
+                <Label Name="lblOutputFolderPath" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Output Folder Path</Label>
+                <TextBox Name="txtBoxOutputFolderPath" Grid.Row="1" Grid.Column="1" Margin="0,10" ToolTip="Choose The Output Folder Path"/>
+                <Button x:Name="btnOutputFolderPath" Grid.Row="1" Grid.Column="2" Padding="5,0" Margin="0,10" ToolTip="Browse File" Click="BrowseOutputFolder" HorizontalAlignment="Right" Width="22">...</Button>
+                <Label Name="lblPassword" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Password (if encrypted)</Label>
+                <TextBox Name="txtBoxPassword" Grid.Row="2" Grid.Column="1" Margin="0,10" ToolTip="Enter Password"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Margin="0,10" x:Name="LibraryGroupBox">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="lblLibrary" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Select a library</Label>
+                <RadioButton Name="PdfSharpCheck"  Grid.Row="1" Grid.Column="1" Margin="0,10" Checked="PdfSharpCheck_Checked">PdfSharp</RadioButton>
+                <RadioButton Name="ITextSharpCheck" Grid.Row="1" Grid.Column="2" Margin="0,10" Checked="ITextSharpCheck_Checked">ITextSharp</RadioButton>
+            </Grid>
+        </GroupBox>
+        <CheckBox x:Name="chkRead" Grid.Row="2" Content="Read Pdf" IsChecked="False" Margin="10,0" FontWeight="SemiBold"/>
+        
+        <GroupBox Grid.Row="3" Margin="0,10" x:Name="WriteGroupBox">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkWrite" Content="Write in Pdf" IsChecked="False" FontWeight="SemiBold"/>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="lblInputText" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Input Text</Label>
+                <TextBox x:Name="txtBoxInputText" IsEnabled="{Binding ElementName=chkWrite, Path=IsChecked}" Grid.Row="0" Grid.Column="1" Margin="0, 10" ToolTip="Enter text that you want to write in PDF" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="4" Margin="0,10" x:Name="EncryptGroupBox">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkEncrypt" Content="Encrypt Pdf" IsChecked="False" FontWeight="SemiBold"/>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="lblEncryptPassword" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Encryption Password</Label>
+                <TextBox x:Name="txtBoxEncryptPassword" IsEnabled="{Binding ElementName=chkEncrypt, Path=IsChecked}" Grid.Row="0" Grid.Column="1" Margin="0, 10" ToolTip="Enter Encryption Password" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="5" Margin="0,10" x:Name="DecryptGroupBox">
+            <GroupBox.Header>
+                <CheckBox x:Name="chkDecrypt" Content="Decrypt Pdf" IsChecked="False" FontWeight="SemiBold"/>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="155"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Name="lblDecryptPassword" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Decryption Password</Label>
+                <TextBox x:Name="txtBoxDecryptPassword" IsEnabled="{Binding ElementName=chkDecrypt, Path=IsChecked}" Grid.Row="0" Grid.Column="1" Margin="0, 10" ToolTip="Enter Decryption Password" />
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnSubmit" Width="60" Height="25" Content="Submit" Click="btnSubmitClick" VerticalAlignment="Bottom" />
+            <Button x:Name="btnCancel" IsCancel="True" Width="60" Height="25" Margin="5,0,0,0" Content="Cancel" Click="btnCancelClick" />
+        </StackPanel>
+    </Grid>
+</Window>
+    
+    
